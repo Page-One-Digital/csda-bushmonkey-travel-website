@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bushmonkey Travel & Tours | Ultra-Luxury Personalised South African Safaris</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        safariOrange: '#D96B27',
+                        safariAmber: '#E88F44',
+                        bushCharcoal: '#1A1A1A',
+                        warmSand: '#F9F6F0',
+                        bushGreen: '#2D4A3E',
+                        goldAccent: '#D4AF37',
+                        softCream: '#F3EFEA'
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+                        sans: ['"Outfit"', 'Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Cormorant Garamond & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Outfit', sans-serif; background-color: #F9F6F0; color: #1A1A1A; }
+        .font-serif { font-family: 'Cormorant Garamond', serif; }
+        .hero-overlay {
+            background: linear-gradient(180deg, rgba(26,26,26,0.5) 0%, rgba(26,26,26,0.7) 60%, rgba(26,26,26,0.95) 100%), url('https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=2000&q=85');
+            background-size: cover;
+            background-position: center;
+        }
+        .gold-border { border-color: rgba(212, 175, 55, 0.3); }
+        .gold-glow { box-shadow: 0 0 25px rgba(212, 175, 55, 0.15); }
+        .smooth-transition { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    </style>
+</head>
+<body class="antialiased selection:bg-safariOrange selection:text-white">
+
+    <!-- Toast Notification Banner -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-28 opacity-0 smooth-transition bg-bushCharcoal text-warmSand px-6 py-4 rounded-2xl shadow-2xl flex items-center space-x-4 border border-goldAccent/40 backdrop-blur-md">
+        <div class="w-10 h-10 rounded-full bg-goldAccent/20 flex items-center justify-center text-goldAccent text-lg">
+            <i class="fa-solid fa-paw"></i>
+        </div>
+        <div>
+            <h4 class="font-bold text-sm tracking-wide text-goldAccent">Bushmonkey Concierge</h4>
+            <p id="toast-msg" class="text-xs text-warmSand/90">Your request has been successfully captured.</p>
+        </div>
+    </div>
+
+    <!-- Sticky Navigation Bar -->
+    <nav class="sticky top-0 z-40 bg-bushCharcoal/95 backdrop-blur-md border-b border-goldAccent/20 text-warmSand transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-24">
+                
+                <!-- Logo & Brand -->
+                <a href="#home" class="flex items-center space-x-3 group">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-safariOrange to-goldAccent flex items-center justify-center shadow-lg group-hover:scale-105 smooth-transition">
+                        <i class="fa-solid fa-paw text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-serif text-2xl font-bold tracking-wider text-warmSand block leading-tight">bushmonkey</span>
+                        <span class="text-[9px] uppercase tracking-widest text-goldAccent font-semibold">Travel & Tours (Pty) Ltd</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <div class="hidden lg:flex items-center space-x-8 text-sm font-medium tracking-wide">
+                    <a href="#home" class="hover:text-goldAccent smooth-transition">Home</a>
+                    <a href="#safaris" class="hover:text-goldAccent smooth-transition">Our Safaris</a>
+                    <a href="#hosts" class="hover:text-goldAccent smooth-transition">Meet Your Hosts</a>
+                    <a href="#awards" class="hover:text-goldAccent smooth-transition">Awards 2026</a>
+                    <a href="#quiz" class="hover:text-goldAccent smooth-transition">Personality Quiz</a>
+                    <a href="#inquiry" class="hover:text-goldAccent smooth-transition">Custom Itinerary</a>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    <a href="#inquiry" class="bg-gradient-to-r from-safariOrange to-safariAmber text-white font-semibold px-6 py-3 rounded-full shadow-xl hover:shadow-safariOrange/40 hover:scale-105 smooth-transition text-sm tracking-wide">
+                        Book Consultation
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <div class="lg:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-warmSand hover:text-goldAccent p-2 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-bushCharcoal border-b border-goldAccent/20 px-6 py-6 space-y-4">
+            <a href="#home" class="block py-2 text-warmSand hover:text-goldAccent border-b border-white/10 font-medium">Home</a>
+            <a href="#safaris" class="block py-2 text-warmSand hover:text-goldAccent border-b border-white/10 font-medium">Our Safaris</a>
+            <a href="#hosts" class="block py-2 text-warmSand hover:text-goldAccent border-b border-white/10 font-medium">Meet Your Hosts</a>
+            <a href="#awards" class="block py-2 text-warmSand hover:text-goldAccent border-b border-white/10 font-medium">Awards 2026</a>
+            <a href="#quiz" class="block py-2 text-warmSand hover:text-goldAccent border-b border-white/10 font-medium">Personality Quiz</a>
+            <a href="#inquiry" class="block py-2 text-warmSand hover:text-goldAccent border-b border-white/10 font-medium">Custom Itinerary</a>
+            <a href="#inquiry" class="block w-full text-center mt-4 bg-gradient-to-r from-safariOrange to-safariAmber text-white py-3.5 rounded-xl font-semibold shadow-lg">
+                Book Consultation
+            </a>
+        </div>
+    </nav>
+
+    <!-- Immersive Hero Section -->
+    <header id="home" class="hero-overlay min-h-[92vh] flex items-center justify-center text-center px-4 relative overflow-hidden">
+        <div class="max-w-5xl mx-auto relative z-10 space-y-8 pt-12 pb-20">
+            
+            <!-- Award Badge Ribbon -->
+            <div class="inline-flex items-center space-x-3 bg-goldAccent/15 backdrop-blur-md border border-goldAccent/40 px-5 py-2 rounded-full text-warmSand text-xs sm:text-sm font-medium shadow-2xl">
+                <i class="fa-solid fa-trophy text-goldAccent animate-pulse"></i>
+                <span class="tracking-wide">MEA Business Awards 2026 Winner • Best Personalised Safari Tour Operator</span>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="font-serif text-5xl sm:text-7xl lg:text-8xl font-bold text-warmSand tracking-tight leading-[1.05]">
+                Same people... new places... <br><span class="italic text-goldAccent">bigger smiles!</span>
+            </h1>
+
+            <p class="text-lg sm:text-2xl text-warmSand/90 font-light max-w-2xl mx-auto tracking-wide">
+                Your Travel Hosts for an Authentic South African Adventure.
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-center gap-5">
+                <a href="#safaris" class="w-full sm:w-auto bg-safariOrange hover:bg-safariAmber text-white font-semibold px-8 py-4 rounded-2xl shadow-2xl hover:scale-105 smooth-transition flex items-center justify-center space-x-3 text-base">
+                    <span>Explore Safaris</span>
+                    <i class="fa-solid fa-compass text-goldAccent"></i>
+                </a>
+                <a href="#quiz" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 backdrop-blur-md text-warmSand font-medium px-8 py-4 rounded-2xl border border-goldAccent/30 smooth-transition text-base">
+                    Take Safari Quiz
+                </a>
+            </div>
+
+            <!-- Core Pillars -->
+            <div class="pt-16 grid grid-cols-3 gap-6 max-w-xl mx-auto text-warmSand/90 text-xs sm:text-sm uppercase tracking-widest font-semibold border-t border-white/15">
+                <div class="flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-paw text-goldAccent"></i>
+                    <span>We Plan</span>
+                </div>
+                <div class="flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-heart text-safariOrange"></i>
+                    <span>We Host</span>
+                </div>
+                <div class="flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-shield-heart text-goldAccent"></i>
+                    <span>We Care</span>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- Awards & Recognition Showcase Bar -->
+    <section id="awards" class="bg-bushCharcoal text-warmSand py-12 border-b border-goldAccent/20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <div class="lg:col-span-4 space-y-2 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 text-goldAccent text-xs font-bold uppercase tracking-widest">
+                        <i class="fa-solid fa-award"></i>
+                        <span>MEA Business Awards 2026</span>
+                    </div>
+                    <h3 class="font-serif text-3xl font-bold text-warmSand">Official Recognition</h3>
+                    <p class="text-xs text-warmSand/70">Certified excellence in bespoke South African travel curation.</p>
+                </div>
+
+                <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-white/5 border border-goldAccent/30 rounded-2xl p-6 backdrop-blur-md flex items-start space-x-4 gold-glow">
+                        <div class="text-3xl text-goldAccent mt-1"><i class="fa-solid fa-medal"></i></div>
+                        <div>
+                            <h4 class="font-bold text-base text-warmSand">Best Personalised Safari Tour Operator</h4>
+                            <p class="text-xs text-warmSand/70 mt-1">Gauteng 2026 • Awarded for exceptional guest satisfaction and hands-on hosting.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/5 border border-goldAccent/30 rounded-2xl p-6 backdrop-blur-md flex items-start space-x-4 gold-glow">
+                        <div class="text-3xl text-goldAccent mt-1"><i class="fa-solid fa-award"></i></div>
+                        <div>
+                            <h4 class="font-bold text-base text-warmSand">Bespoke Itineraries Excellence</h4>
+                            <p class="text-xs text-warmSand/70 mt-1">Gauteng 2026 • Recognized for master-crafted custom travel routes and wildlife experiences.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet Your Hosts Section -->
+    <section id="hosts" class="py-24 bg-warmSand relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                
+                <!-- Image Showcase -->
+                <div class="relative">
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1000&q=80" alt="Bushmonkey Travel Hosts" class="w-full h-[500px] object-cover hover:scale-105 smooth-transition duration-700">
+                    </div>
+                    <div class="absolute -bottom-8 -right-8 bg-bushCharcoal text-warmSand p-8 rounded-3xl shadow-2xl max-w-sm border border-goldAccent/30 hidden sm:block">
+                        <p class="font-serif italic text-goldAccent text-base">"We walk every step of the safari with you, ensuring your journey is filled with warmth, wonder, and unforgettable wildlife moments."</p>
+                        <span class="block mt-4 text-xs uppercase tracking-widest font-bold text-warmSand/80">— Founders & Hosts</span>
+                    </div>
+                </div>
+
+                <!-- Bio Content -->
+                <div class="space-y-6">
+                    <div class="inline-flex items-center space-x-2 text-safariOrange font-semibold text-xs uppercase tracking-widest">
+                        <i class="fa-solid fa-heart"></i>
+                        <span>The Faces Behind the Adventures</span>
+                    </div>
+                    <h2 class="font-serif text-4xl sm:text-6xl font-bold text-bushCharcoal leading-[1.1]">
+                        Authentic Hospitality Rooted in the Wild
+                    </h2>
+                    <p class="text-bushCharcoal/80 text-base sm:text-lg leading-relaxed font-light">
+                        At <strong class="text-safariOrange font-semibold">Bushmonkey Travel & Tours</strong>, tourism isn't just an itinerary—it's a personal relationship. Founded by passionate wildlife enthusiasts in Gauteng, our mission is to connect travelers with the true heartbeat of South Africa.
+                    </p>
+                    <p class="text-bushCharcoal/70 text-sm sm:text-base leading-relaxed font-light">
+                        Whether tracking the Big Five in pristine game reserves, enjoying morning coffee in an open 4x4 surrounded by inquisitive vervet monkeys and giraffes, or dining under a canopy of stars in an authentic boma, we bring a personal touch that corporate travel agencies simply cannot replicate.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-6 pt-4">
+                        <div class="bg-white p-6 rounded-2xl border border-goldAccent/25 shadow-sm">
+                            <h4 class="font-bold text-bushCharcoal text-lg">100% Personalised</h4>
+                            <p class="text-xs text-bushCharcoal/70 mt-1 font-light">Tailored strictly around your pace, preferences, and bucket-list dreams.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl border border-goldAccent/25 shadow-sm">
+                            <h4 class="font-bold text-bushCharcoal text-lg">24/7 Hands-On Care</h4>
+                            <p class="text-xs text-bushCharcoal/70 mt-1 font-light">From airport arrival to departure, we are with you every single mile.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Safari & Itinerary Explorer -->
+    <section id="safaris" class="py-24 bg-softCream border-t border-b border-goldAccent/15">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <span class="text-safariOrange font-semibold text-xs uppercase tracking-widest">Curated Offerings</span>
+                <h2 class="font-serif text-4xl sm:text-6xl font-bold text-bushCharcoal">Explore Our Signature Safaris</h2>
+                <p class="text-bushCharcoal/70 text-base sm:text-lg font-light">
+                    Hand-crafted experiences designed to immerse you in South Africa’s majestic landscapes and wildlife.
+                </p>
+            </div>
+
+            <!-- Tab Navigation for Services -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button onclick="filterSafaris('all')" id="btn-all" class="px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-safariOrange text-white shadow-md transition-all">All Experiences</button>
+                <button onclick="filterSafaris('safari')" id="btn-safari" class="px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-white text-bushCharcoal border border-goldAccent/30 hover:bg-safariOrange hover:text-white transition-all">Big Five Safaris</button>
+                <button onclick="filterSafaris('lodge')" id="btn-lodge" class="px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-white text-bushCharcoal border border-goldAccent/30 hover:bg-safariOrange hover:text-white transition-all">Luxury Lodges</button>
+                <button onclick="filterSafaris('transfer')" id="btn-transfer" class="px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-white text-bushCharcoal border border-goldAccent/30 hover:bg-safariOrange hover:text-white transition-all">VIP Transfers</button>
+            </div>
+
+            <!-- Safari Cards Grid -->
+            <div id="safari-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Card 1 -->
+                <div class="safari-item safari bg-white rounded-3xl overflow-hidden shadow-xl border border-goldAccent/25 flex flex-col justify-between group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1534177616072-ef7dc120449d?auto=format&fit=crop&w=800&q=80" alt="Personalised Safaris" class="w-full h-full object-cover group-hover:scale-110 smooth-transition duration-700">
+                        <div class="absolute top-4 right-4 bg-bushCharcoal/80 backdrop-blur-md text-goldAccent text-xs px-3 py-1.5 rounded-full font-semibold">
+                            Award Winning
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-4 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="text-safariOrange text-xs font-bold uppercase tracking-widest mb-1">Wildlife Expedition</div>
+                            <h3 class="font-serif text-2xl font-bold text-bushCharcoal">Personalised Big Five Safaris</h3>
+                            <p class="text-bushCharcoal/70 text-sm leading-relaxed font-light mt-2">
+                                Track lions, leopards, rhinos, elephants, and buffaloes in premier game reserves with expert personal guides.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-goldAccent/20 flex items-center justify-between">
+                            <span class="text-xs font-semibold text-bushCharcoal/80"><i class="fa-regular fa-clock text-safariOrange mr-1"></i> Custom Duration</span>
+                            <a href="#inquiry" onclick="selectService('Personalised Big Five Safari')" class="text-safariOrange font-bold text-sm inline-flex items-center space-x-1 hover:translate-x-1 smooth-transition">
+                                <span>Inquire Now</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="safari-item lodge bg-white rounded-3xl overflow-hidden shadow-xl border border-goldAccent/25 flex flex-col justify-between group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80" alt="Luxury Lodges" class="w-full h-full object-cover group-hover:scale-110 smooth-transition duration-700">
+                        <div class="absolute top-4 right-4 bg-bushCharcoal/80 backdrop-blur-md text-goldAccent text-xs px-3 py-1.5 rounded-full font-semibold">
+                            5-Star Stays
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-4 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="text-safariOrange text-xs font-bold uppercase tracking-widest mb-1">Accommodation</div>
+                            <h3 class="font-serif text-2xl font-bold text-bushCharcoal">Luxury Lodge Reservations</h3>
+                            <p class="text-bushCharcoal/70 text-sm leading-relaxed font-light mt-2">
+                                Exclusive bookings at hand-picked boutique bush retreats and 5-star lodges offering unmatched starry night bomas.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-goldAccent/20 flex items-center justify-between">
+                            <span class="text-xs font-semibold text-bushCharcoal/80"><i class="fa-solid fa-bed text-safariOrange mr-1"></i> Boutique Suites</span>
+                            <a href="#inquiry" onclick="selectService('Luxury Lodge Stay')" class="text-safariOrange font-bold text-sm inline-flex items-center space-x-1 hover:translate-x-1 smooth-transition">
+                                <span>Inquire Now</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="safari-item transfer bg-white rounded-3xl overflow-hidden shadow-xl border border-goldAccent/25 flex flex-col justify-between group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80" alt="Transport & Transfers" class="w-full h-full object-cover group-hover:scale-110 smooth-transition duration-700">
+                        <div class="absolute top-4 right-4 bg-bushCharcoal/80 backdrop-blur-md text-goldAccent text-xs px-3 py-1.5 rounded-full font-semibold">
+                            Safe & VIP
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-4 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="text-safariOrange text-xs font-bold uppercase tracking-widest mb-1">Transit</div>
+                            <h3 class="font-serif text-2xl font-bold text-bushCharcoal">Transport & VIP Transfers</h3>
+                            <p class="text-bushCharcoal/70 text-sm leading-relaxed font-light mt-2">
+                                Seamless, comfortable private transport between international airports, game reserves, and scenic landmarks.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-goldAccent/20 flex items-center justify-between">
+                            <span class="text-xs font-semibold text-bushCharcoal/80"><i class="fa-solid fa-car text-safariOrange mr-1"></i> Private Vehicle</span>
+                            <a href="#inquiry" onclick="selectService('Transport & Transfers')" class="text-safariOrange font-bold text-sm inline-flex items-center space-x-1 hover:translate-x-1 smooth-transition">
+                                <span>Inquire Now</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="safari-item safari lodge bg-white rounded-3xl overflow-hidden shadow-xl border border-goldAccent/25 flex flex-col justify-between group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80" alt="Curated Experiences" class="w-full h-full object-cover group-hover:scale-110 smooth-transition duration-700">
+                        <div class="absolute top-4 right-4 bg-bushCharcoal/80 backdrop-blur-md text-goldAccent text-xs px-3 py-1.5 rounded-full font-semibold">
+                            Unique
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-4 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="text-safariOrange text-xs font-bold uppercase tracking-widest mb-1">Cultural & Nature</div>
+                            <h3 class="font-serif text-2xl font-bold text-bushCharcoal">Curated Travel Experiences</h3>
+                            <p class="text-bushCharcoal/70 text-sm leading-relaxed font-light mt-2">
+                                Beyond wildlife: photographic masterclasses, guided bush walks, wine tastings, and local cultural tours.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-goldAccent/20 flex items-center justify-between">
+                            <span class="text-xs font-semibold text-bushCharcoal/80"><i class="fa-solid fa-camera text-safariOrange mr-1"></i> Masterclass</span>
+                            <a href="#inquiry" onclick="selectService('Curated Travel Experiences')" class="text-safariOrange font-bold text-sm inline-flex items-center space-x-1 hover:translate-x-1 smooth-transition">
+                                <span>Inquire Now</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="safari-item safari lodge bg-white rounded-3xl overflow-hidden shadow-xl border border-goldAccent/25 flex flex-col justify-between group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80" alt="Bespoke Itineraries" class="w-full h-full object-cover group-hover:scale-110 smooth-transition duration-700">
+                        <div class="absolute top-4 right-4 bg-bushCharcoal/80 backdrop-blur-md text-goldAccent text-xs px-3 py-1.5 rounded-full font-semibold">
+                            Award Winner
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-4 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="text-safariOrange text-xs font-bold uppercase tracking-widest mb-1">Mastercrafted</div>
+                            <h3 class="font-serif text-2xl font-bold text-bushCharcoal">Bespoke Itineraries Excellence</h3>
+                            <p class="text-bushCharcoal/70 text-sm leading-relaxed font-light mt-2">
+                                Multi-day custom routes planned down to the very last detail, ensuring zero stress and maximum wonder.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-goldAccent/20 flex items-center justify-between">
+                            <span class="text-xs font-semibold text-bushCharcoal/80"><i class="fa-solid fa-map text-safariOrange mr-1"></i> Custom Route</span>
+                            <a href="#inquiry" onclick="selectService('Bespoke Multi-Day Itinerary')" class="text-safariOrange font-bold text-sm inline-flex items-center space-x-1 hover:translate-x-1 smooth-transition">
+                                <span>Inquire Now</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6: Callout -->
+                <div class="bg-gradient-to-br from-bushCharcoal to-bushGreen text-warmSand rounded-3xl p-8 shadow-2xl flex flex-col justify-between relative overflow-hidden border border-goldAccent/30">
+                    <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl">
+                        <i class="fa-solid fa-paw"></i>
+                    </div>
+                    <div class="relative z-10 space-y-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/10 text-goldAccent flex items-center justify-center text-2xl">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <h3 class="font-serif text-3xl font-bold text-warmSand">The Bushmonkey Promise</h3>
+                        <p class="text-warmSand/80 text-sm leading-relaxed font-light">
+                            "We Plan. We Host. We Care." Let us design an extraordinary African adventure tailored precisely to your heart's desire.
+                        </p>
+                    </div>
+                    <div class="relative z-10 pt-6">
+                        <a href="#inquiry" class="inline-flex items-center space-x-2 text-goldAccent font-semibold text-sm hover:underline">
+                            <span>Start Planning Today</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive "Safari Personality Quiz" Widget -->
+    <section id="quiz" class="py-24 bg-bushCharcoal text-warmSand relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:20px_20px]"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <div class="text-center space-y-4 mb-14">
+                <span class="text-goldAccent font-semibold text-xs uppercase tracking-widest">Interactive Experience</span>
+                <h2 class="font-serif text-4xl sm:text-6xl font-bold text-warmSand">The Safari Personality Quiz</h2>
+                <p class="text-warmSand/80 text-base sm:text-lg font-light max-w-xl mx-auto">
+                    Discover your safari animal match and your ideal travel partner preference to unlock your custom holiday recommendation!
+                </p>
+            </div>
+
+            <!-- Quiz Box -->
+            <div class="bg-white/5 border border-goldAccent/30 backdrop-blur-md rounded-3xl p-8 sm:p-12 shadow-2xl gold-glow">
+                
+                <!-- Step 1: Animal Persona -->
+                <div id="quiz-step-1" class="space-y-6">
+                    <div class="flex items-center justify-between text-xs text-goldAccent uppercase tracking-widest font-semibold">
+                        <span>Question 1 of 2</span>
+                        <span>50% Completed</span>
+                    </div>
+                    <h3 class="font-serif text-2xl sm:text-4xl font-bold text-warmSand">Which safari animal matches your travel personality?</h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                        <button onclick="selectAnimal('Lion')" class="text-left p-6 rounded-2xl bg-white/5 hover:bg-safariOrange/20 border border-white/10 hover:border-safariOrange flex items-start space-x-4 smooth-transition group">
+                            <div class="text-3xl text-safariOrange group-hover:scale-110 smooth-transition"><i class="fa-solid fa-cat"></i></div>
+                            <div>
+                                <h4 class="font-bold text-lg text-warmSand">Lion</h4>
+                                <p class="text-xs text-warmSand/70 mt-1 font-light">The fearless adventurer ready for big thrills and majestic wildlife sightings.</p>
+                            </div>
+                        </button>
+
+                        <button onclick="selectAnimal('Elephant')" class="text-left p-6 rounded-2xl bg-white/5 hover:bg-bushGreen/30 border border-white/10 hover:border-goldAccent flex items-start space-x-4 smooth-transition group">
+                            <div class="text-3xl text-goldAccent group-hover:scale-110 smooth-transition"><i class="fa-solid fa-earth-africa"></i></div>
+                            <div>
+                                <h4 class="font-bold text-lg text-warmSand">Elephant</h4>
+                                <p class="text-xs text-warmSand/70 mt-1 font-light">The family organiser who cherishes deep connections and shared memories.</p>
+                            </div>
+                        </button>
+
+                        <button onclick="selectAnimal('Leopard')" class="text-left p-6 rounded-2xl bg-white/5 hover:bg-safariOrange/20 border border-white/10 hover:border-safariOrange flex items-start space-x-4 smooth-transition group">
+                            <div class="text-3xl text-safariOrange group-hover:scale-110 smooth-transition"><i class="fa-solid fa-binoculars"></i></div>
+                            <div>
+                                <h4 class="font-bold text-lg text-warmSand">Leopard</h4>
+                                <p class="text-xs text-warmSand/70 mt-1 font-light">The independent explorer seeking hidden gems and quiet luxury lodges.</p>
+                            </div>
+                        </button>
+
+                        <button onclick="selectAnimal('Giraffe')" class="text-left p-6 rounded-2xl bg-white/5 hover:bg-bushGreen/30 border border-white/10 hover:border-goldAccent flex items-start space-x-4 smooth-transition group">
+                            <div class="text-3xl text-goldAccent group-hover:scale-110 smooth-transition"><i class="fa-solid fa-sun"></i></div>
+                            <div>
+                                <h4 class="font-bold text-lg text-warmSand">Giraffe</h4>
+                                <p class="text-xs text-warmSand/70 mt-1 font-light">The curious wanderer who loves grand panoramic scenery and sunset vistas.</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Travel Partner (Hidden initially) -->
+                <div id="quiz-step-2" class="hidden space-y-6">
+                    <div class="flex items-center justify-between text-xs text-goldAccent uppercase tracking-widest font-semibold">
+                        <span>Question 2 of 2</span>
+                        <span>90% Completed</span>
+                    </div>
+                    <h3 class="font-serif text-2xl sm:text-4xl font-bold text-warmSand">Who is your ultimate safari partner?</h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                        <button onclick="completeQuiz('My Spouse / Partner')" class="text-left p-6 rounded-2xl bg-white/5 hover:bg-safariOrange/20 border border-white/10 hover:border-safariOrange flex items-center space-x-4 smooth-transition">
+                            <div class="text-2xl text-safariOrange"><i class="fa-solid fa-ring"></i></div>
+                            <div>
+                                <h4 class="font-bold text-lg text-warmSand">My Spouse / Partner</h4>
+                                <p class="text-xs text-warmSand/70 font-light">Romantic boma dinners & intimate bush suites.</p>
+                            </div>
+                        </button>
+
+                        <button onclick="completeQuiz('My Best Friend')" class="text-left p-6 rounded-2xl bg-white/5 hover:bg-bushGreen/30 border border-white/10 hover:border-goldAccent flex items-center space-x-4 smooth-transition">
+                            <div class="text-2xl text-goldAccent"><i class="fa-solid fa-user-group"></i></div>
+                            <div>
+                                <h4 class="font-bold text-lg text-warmSand">My Friend</h4>
+                                <p class="text-xs text-warmSand/70 font-light">Laughter around the campfire & epic game drives.</p>
+                            </div>
+                        </button>
+
+                        <button onclick="completeQuiz('My Sibling / Family')" class="text-left p-6 rounded-2xl bg-white/5 hover:bg-safariOrange/20 border border-white/10 hover:border-safariOrange flex items-center space-x-4 smooth-transition">
+                            <div class="text-2xl text-safariOrange"><i class="fa-solid fa-people-roof"></i></div>
+                            <div>
+                                <h4 class="font-bold text-lg text-warmSand">My Sibling / Family</h4>
+                                <p class="text-xs text-warmSand/70 font-light">Unforgettable shared bucket-list milestones.</p>
+                            </div>
+                        </button>
+
+                        <button onclick="completeQuiz('My Parent / Solo')" class="text-left p-6 rounded-2xl bg-white/5 hover:bg-bushGreen/30 border border-white/10 hover:border-goldAccent flex items-center space-x-4 smooth-transition">
+                            <div class="text-2xl text-goldAccent"><i class="fa-solid fa-compass"></i></div>
+                            <div>
+                                <h4 class="font-bold text-lg text-warmSand">My Parent / Solo</h4>
+                                <p class="text-xs text-warmSand/70 font-light">Deep connection with nature and peaceful discovery.</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Result (Hidden initially) -->
+                <div id="quiz-result" class="hidden text-center space-y-6 py-4">
+                    <div class="w-20 h-20 bg-gradient-to-tr from-safariOrange to-goldAccent rounded-full flex items-center justify-center mx-auto text-3xl shadow-xl">
+                        <i class="fa-solid fa-award text-white"></i>
+                    </div>
+                    <span class="text-xs uppercase tracking-widest text-goldAccent font-semibold">Your Custom Safari Persona</span>
+                    <h3 id="result-title" class="font-serif text-3xl sm:text-4xl font-bold text-warmSand">The Fearless Lion with your Partner</h3>
+                    <p id="result-desc" class="text-warmSand/80 text-sm sm:text-base font-light max-w-lg mx-auto">
+                        Based on your selections, we recommend our Private Big Five Game Reserve Package paired with 5-star lodge accommodation and romantic candlelit bush dinners.
+                    </p>
+                    <div class="pt-6 flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="#inquiry" onclick="applyQuizToForm()" class="bg-safariOrange hover:bg-safariAmber text-white font-bold px-8 py-4 rounded-xl shadow-xl smooth-transition">
+                            Book This Recommended Safari
+                        </a>
+                        <button onclick="resetQuiz()" class="bg-white/10 hover:bg-white/20 text-warmSand font-medium px-6 py-4 rounded-xl border border-white/20 smooth-transition">
+                            Retake Quiz
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Custom Itinerary & Booking Inquiry Form -->
+    <section id="inquiry" class="py-24 bg-warmSand">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-3xl shadow-2xl border border-goldAccent/30 p-8 sm:p-14">
+                
+                <div class="text-center space-y-3 mb-12">
+                    <span class="text-safariOrange font-semibold text-xs uppercase tracking-widest">Start Planning</span>
+                    <h2 class="font-serif text-4xl sm:text-5xl font-bold text-bushCharcoal">Custom Safari Consultation</h2>
+                    <p class="text-bushCharcoal/70 text-sm sm:text-base font-light">
+                        Fill out your details below. Our founders will personally review your preferences and respond within 24 hours.
+                    </p>
+                </div>
+
+                <form id="safari-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-bushCharcoal mb-2">Your Full Name *</label>
+                            <input type="text" id="form-name" required placeholder="e.g., Jonathan & Sarah Smith" class="w-full bg-softCream border border-bushCharcoal/20 rounded-2xl px-5 py-3.5 text-sm focus:outline-none focus:border-safariOrange smooth-transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-bushCharcoal mb-2">Email Address *</label>
+                            <input type="email" id="form-email" required placeholder="jonathan@example.com" class="w-full bg-softCream border border-bushCharcoal/20 rounded-2xl px-5 py-3.5 text-sm focus:outline-none focus:border-safariOrange smooth-transition">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-bushCharcoal mb-2">Preferred Safari Type</label>
+                            <select id="form-safari-type" class="w-full bg-softCream border border-bushCharcoal/20 rounded-2xl px-5 py-3.5 text-sm focus:outline-none focus:border-safariOrange smooth-transition">
+                                <option value="Personalised Big Five Safari">Personalised Big Five Safari</option>
+                                <option value="Luxury Lodge Stay">Luxury Lodge Stay</option>
+                                <option value="Transport & Transfers">Transport & Transfers</option>
+                                <option value="Curated Travel Experiences">Curated Travel Experiences</option>
+                                <option value="Bespoke Multi-Day Itinerary">Bespoke Multi-Day Itinerary</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-bushCharcoal mb-2">Safari Partner</label>
+                            <select id="form-partner-type" class="w-full bg-softCream border border-bushCharcoal/20 rounded-2xl px-5 py-3.5 text-sm focus:outline-none focus:border-safariOrange smooth-transition">
+                                <option value="Spouse / Partner">Spouse / Partner</option>
+                                <option value="Friend">Friend</option>
+                                <option value="Sibling">Sibling</option>
+                                <option value="Parent / Family">Parent / Family</option>
+                                <option value="Solo Exploration">Solo Exploration</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-bushCharcoal mb-2">Estimated Travel Date</label>
+                            <input type="date" id="form-date" class="w-full bg-softCream border border-bushCharcoal/20 rounded-2xl px-5 py-3.5 text-sm focus:outline-none focus:border-safariOrange smooth-transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-bushCharcoal mb-2">Tell Us About Your Dream Safari</label>
+                        <textarea id="form-notes" rows="4" placeholder="Any specific wildlife you want to see, accommodation tier, or special occasions?" class="w-full bg-softCream border border-bushCharcoal/20 rounded-2xl px-5 py-3.5 text-sm focus:outline-none focus:border-safariOrange smooth-transition"></textarea>
+                    </div>
+
+                    <div class="text-center pt-4">
+                        <button type="submit" class="w-full sm:w-auto bg-gradient-to-r from-safariOrange to-safariAmber text-white font-bold px-12 py-4 rounded-2xl shadow-xl hover:scale-105 smooth-transition text-base tracking-wide">
+                            Submit Consultation Request
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-bushCharcoal text-warmSand pt-16 pb-12 border-t border-goldAccent/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 pb-12 border-b border-white/10">
+                
+                <div class="space-y-4 md:col-span-1">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-safariOrange to-goldAccent flex items-center justify-center">
+                            <i class="fa-solid fa-paw text-white"></i>
+                        </div>
+                        <span class="font-serif text-xl font-bold tracking-wider text-warmSand">bushmonkey</span>
+                    </div>
+                    <p class="text-xs text-warmSand/70 leading-relaxed font-light">
+                        Personalised Safaris & Curated South African Travel Experiences. Award-winning service with a personal touch.
+                    </p>
+                    <div class="text-goldAccent font-serif italic text-sm">
+                        "We Plan • We Host • We Care"
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-xs uppercase tracking-widest text-goldAccent mb-4">Quick Links</h4>
+                    <ul class="space-y-2.5 text-sm text-warmSand/80 font-light">
+                        <li><a href="#home" class="hover:text-goldAccent smooth-transition">Home</a></li>
+                        <li><a href="#safaris" class="hover:text-goldAccent smooth-transition">Our Safaris</a></li>
+                        <li><a href="#hosts" class="hover:text-goldAccent smooth-transition">Meet Your Hosts</a></li>
+                        <li><a href="#awards" class="hover:text-goldAccent smooth-transition">Awards 2026</a></li>
+                        <li><a href="#quiz" class="hover:text-goldAccent smooth-transition">Personality Quiz</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-xs uppercase tracking-widest text-goldAccent mb-4">Core Services</h4>
+                    <ul class="space-y-2.5 text-sm text-warmSand/80 font-light">
+                        <li><a href="#safaris" class="hover:text-goldAccent smooth-transition">Personalised Big Five Safaris</a></li>
+                        <li><a href="#safaris" class="hover:text-goldAccent smooth-transition">Luxury Lodge Bookings</a></li>
+                        <li><a href="#safaris" class="hover:text-goldAccent smooth-transition">VIP Transport & Transfers</a></li>
+                        <li><a href="#safaris" class="hover:text-goldAccent smooth-transition">Bespoke Multi-Day Itineraries</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-xs uppercase tracking-widest text-goldAccent mb-4">Connect With Us</h4>
+                    <p class="text-xs text-warmSand/80 mb-4 font-light">Based in Gauteng, South Africa, operating nationwide across premier game reserves.</p>
+                    <div class="flex space-x-3 text-lg">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-safariOrange smooth-transition"><i class="fa-brands fa-facebook-f text-sm"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-safariOrange smooth-transition"><i class="fa-brands fa-instagram text-sm"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-safariOrange smooth-transition"><i class="fa-brands fa-whatsapp text-sm"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-safariOrange smooth-transition"><i class="fa-regular fa-envelope text-sm"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-warmSand/60 font-light">
+                <p>&copy; 2026 Bushmonkey Travel & Tours (Pty) Ltd. All rights reserved.</p>
+                <p class="mt-4 sm:mt-0 text-goldAccent font-medium">MEA Business Awards Winner 2026 🐾</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Safari Tab Filtering
+        function filterSafaris(category) {
+            const items = document.querySelectorAll('.safari-item');
+            const buttons = document.querySelectorAll('#safaris button');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-safariOrange', 'text-white');
+                btn.classList.add('bg-white', 'text-bushCharcoal');
+            });
+
+            const activeBtn = document.getElementById(`btn-${category}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white', 'text-bushCharcoal');
+                activeBtn.classList.add('bg-safariOrange', 'text-white');
+            }
+
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Quick Select Service into Form
+        function selectService(serviceName) {
+            const selectEl = document.getElementById('form-safari-type');
+            for (let i = 0; i < selectEl.options.length; i++) {
+                if (selectEl.options[i].value === serviceName) {
+                    selectEl.selectedIndex = i;
+                    break;
+                }
+            }
+            showToast(`Selected "${serviceName}" in consultation form.`);
+        }
+
+        // Quiz Logic
+        let selectedAnimalName = '';
+        let selectedPartnerName = '';
+
+        function selectAnimal(animal) {
+            selectedAnimalName = animal;
+            document.getElementById('quiz-step-1').classList.add('hidden');
+            document.getElementById('quiz-step-2').classList.remove('hidden');
+        }
+
+        function completeQuiz(partner) {
+            selectedPartnerName = partner;
+            document.getElementById('quiz-step-2').classList.add('hidden');
+            
+            const titleEl = document.getElementById('result-title');
+            const descEl = document.getElementById('result-desc');
+            
+            titleEl.textContent = `The ${selectedAnimalName} Safari with ${selectedPartnerName}`;
+            descEl.textContent = `Your choices reflect a wonderful balance of discovery and connection! We have tailored a custom package pairing exclusive game reserve lodges with personalised hosting.`;
+            
+            document.getElementById('quiz-result').classList.remove('hidden');
+        }
+
+        function resetQuiz() {
+            selectedAnimalName = '';
+            selectedPartnerName = '';
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-step-1').classList.remove('hidden');
+        }
+
+        function applyQuizToForm() {
+            const notesEl = document.getElementById('form-notes');
+            notesEl.value = `Quiz Result: I am a ${selectedAnimalName} traveling with ${selectedPartnerName}. Please customize my itinerary accordingly!`;
+            
+            const partnerSelect = document.getElementById('form-partner-type');
+            if (selectedPartnerName.includes('Spouse')) partnerSelect.value = 'Spouse / Partner';
+            else if (selectedPartnerName.includes('Friend')) partnerSelect.value = 'Friend';
+            else if (selectedPartnerName.includes('Sibling')) partnerSelect.value = 'Sibling';
+            else partnerSelect.value = 'Parent / Family';
+
+            showToast("Quiz preferences successfully applied to consultation form!");
+        }
+
+        // Form Submit Handler
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('form-name').value;
+            showToast(`Thank you ${name}! Your consultation request has been received by Bushmonkey.`);
+            document.getElementById('safari-form').reset();
+        }
+
+        // Toast Notification Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toast-msg');
+            msgEl.textContent = message;
+            
+            toast.classList.remove('translate-y-28', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-28', 'opacity-0');
+            }, 4500);
+        }
+    </script>
+</body>
+</html>
+```
+eof
